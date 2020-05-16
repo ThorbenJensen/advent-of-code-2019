@@ -18,3 +18,11 @@ def test_digits_never_decrease():
     assert day04.digits_never_decrease(123456)
     assert day04.digits_never_decrease(123789)
     assert not day04.digits_never_decrease(222221)
+
+
+def matching_group_length_2():
+    assert not day04.matching_group_length_2(111111)
+    assert not day04.matching_group_length_2(123456)
+    assert not day04.matching_group_length_2(123444)
+    assert day04.matching_group_length_2(111122)
+    assert day04.matching_group_length_2(112233)

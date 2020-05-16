@@ -1,3 +1,5 @@
+import itertools
+
 from functional import seq
 
 START = 246540
@@ -25,6 +27,11 @@ def two_adjacent_digits_same(number: int) -> bool:
     return False
 
 
+def matching_group_length_2(number: int) -> bool:
+    lengths = [len(list(g)) for k, g in itertools.groupby(str(number))]
+    return seq(lengths).filter(lambda x: x > 1).map(lambda x: x < 3).any()
+
+
 def digits_never_decrease(number: int) -> bool:
     if str(number)[0] > str(number)[1]:
         return False
@@ -39,11 +46,17 @@ def digits_never_decrease(number: int) -> bool:
     return True
 
 
-if __name__ == "main":
+if __name__ == "__main__":
     candidates = seq(range(START, END + 1))
 
-    passwords = candidates.filter(is_within_range).filter(two_adjacent_digits_same).filter(
-        digits_never_decrease
+    passwords_one = (
+        candidates.filter(is_within_range)
+        .filter(two_adjacent_digits_same)
+        .filter(digits_never_decrease)
     )
 
-    print(f"number of possible passwords: {passwords.len()}")
+    print(f"number of possible passwords (part 1): {passwords_one.len()}")
+
+    passwords_two = passwords_one.filter(matching_group_length_2)
+
+    print(f"number of possible passwords (part 1): {passwords_two.len()}")
