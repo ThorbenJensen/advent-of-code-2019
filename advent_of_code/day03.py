@@ -58,7 +58,7 @@ def combined_wiring(inputs: Tuple[str]):
     return wiring_combined
 
 
-def distance_closest_crossing(grid_combined: np.ndarray):
+def manhattan_distance_closest_crossing(grid_combined: np.ndarray):
     crossings = seq((zip(*np.where(grid_combined > 1)))).filter(
         lambda x: x != CENTRAL_PORT
     )
@@ -66,9 +66,9 @@ def distance_closest_crossing(grid_combined: np.ndarray):
     return closest_distance
 
 
-def solve(inputs: Tuple[str]):
+def solve_manhattan_distance(inputs: Tuple[str]):
     grid_combined = combined_wiring(inputs=(inputs[0], inputs[1]))
-    closest_distance = distance_closest_crossing(grid_combined)
+    closest_distance = manhattan_distance_closest_crossing(grid_combined)
     return closest_distance
 
 
@@ -76,5 +76,5 @@ if __name__ == "__main__":
     # read input
     with open(str(INPUT)) as f:
         inputs = tuple(f.readlines())
-    closest_distance = solve(inputs=inputs)
+    closest_distance = solve_manhattan_distance(inputs=inputs)
     print(f"closest_distance: {closest_distance}")
