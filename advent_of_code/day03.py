@@ -1,9 +1,11 @@
+from pathlib import Path
 from typing import List, Tuple
 
 import numpy as np
 from functional import seq
 
-CENTRAL_PORT = (1000, 1000)  # (row, column)
+INPUT = Path("data/day03.txt")
+CENTRAL_PORT = (16000, 8000)  # (row, column)
 
 
 def input_to_directions(input: str) -> List[Tuple[str, int]]:
@@ -49,14 +51,14 @@ def manhattan_distance(port: Tuple[int, int]):
     return abs(CENTRAL_PORT[0] - port[0]) + abs(CENTRAL_PORT[1] - port[1])
 
 
-def combined_wiring(inputs: List[str]):
+def combined_wiring(inputs: Tuple[str]):
     wiring1 = draw_wire(input=inputs[0])
     wiring2 = draw_wire(input=inputs[1])
     wiring_combined = wiring1 + wiring2
     return wiring_combined
 
 
-def distance_closest_crossing():
+def distance_closest_crossing(grid_combined: np.ndarray):
     crossings = seq((zip(*np.where(grid_combined > 1)))).filter(
         lambda x: x != CENTRAL_PORT
     )
@@ -64,8 +66,15 @@ def distance_closest_crossing():
     return closest_distance
 
 
-input1 = "R8,U5,L5,D3"
-input2 = "U7,R6,D4,L4"
-grid_combined = combined_wiring(inputs=[input1, input2])
-closest_distance = distance_closest_crossing()
-print(f"closest_distance: {closest_distance}")
+def solve(inputs: Tuple[str]):
+    grid_combined = combined_wiring(inputs=(inputs[0], inputs[1]))
+    closest_distance = distance_closest_crossing(grid_combined)
+    return closest_distance
+
+
+if __name__ == "__main__":
+    # read input
+    with open(str(INPUT)) as f:
+        inputs = tuple(f.readlines())
+    closest_distance = solve(inputs=inputs)
+    print(f"closest_distance: {closest_distance}")
