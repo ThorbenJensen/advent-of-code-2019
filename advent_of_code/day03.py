@@ -77,4 +77,4 @@ if __name__ == "__main__":
     with open(str(INPUT)) as f:
         inputs = tuple(f.readlines())
     closest_distance = solve_manhattan_distance(inputs=inputs)
-    print(f"closest_distance: {closest_distance}")
+    print(f"manhattan distance of closes crossing: {closest_distance}")
